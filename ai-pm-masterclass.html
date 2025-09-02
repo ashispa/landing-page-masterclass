@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI PM Masterclass - Lead Smarter, Not Harder</title>
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #f59e0b;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --background-light: #f9fafb;
+            --background-white: #ffffff;
+            --border-color: #e5e7eb;
+            --success-color: #10b981;
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --gradient-accent: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--background-white);
+            overflow-x: hidden;
+        }
+
+        /* Background Pattern */
+        .bg-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                linear-gradient(45deg, rgba(245, 158, 11, 0.05) 0%, transparent 100%);
+            background-size: 400px 400px, 600px 600px, 100% 100%;
+            background-position: 0 0, 300px 300px, 0 0;
+            position: relative;
+        }
+
+        .bg-pattern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(99,102,241,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        .header {
+            background: var(--background-white);
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 4rem;
+            background: var(--background-light);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-color) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-secondary {
+            background: var(--background-white);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Countdown Timer */
+        .countdown-section {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 12px;
+            min-width: 100px;
+        }
+
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 0;
+            background: var(--background-white);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--background-white);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 6rem 0;
+            background: var(--background-light);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial {
+            background: var(--background-white);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .testimonial-quote {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .author-info h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 6rem 0;
+            background: var(--background-white);
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem;
+            background: var(--background-white);
+            border: none;
+            text-align: left;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: var(--background-light);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            display: none;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-primary);
+            color: white;
+            padding: 3rem 0 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 2rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-stats {
+                gap: 2rem;
+            }
+            
+            .countdown {
+                gap: 1rem;
+            }
+            
+            .countdown-item {
+                padding: 1rem;
+                min-width: 80px;
+            }
+            
+            .countdown-number {
+                font-size: 2rem;
+            }
+            
+            .features-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">TechAdemy</div>
+                <a href="#register" class="btn btn-primary">Register Now</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero bg-pattern">
+        <div class="container">
+            <div class="hero-content animate-fade-up">
+                <div class="hero-badge">
+                    🚀 Limited Time Masterclass
+                </div>
+                <h1>Lead Smarter, Not Harder</h1>
+                <p class="hero-subtitle">
+                    Master AI-driven Product Management techniques that top companies use to build breakthrough products. 
+                    Join 5,000+ PMs who've transformed their approach to product strategy.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">5,000+</span>
+                        <span class="stat-label">Students Enrolled</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Success Rate</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">AI Tools Covered</span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="#register" class="btn btn-primary">Secure Your Spot - $97</a>
+                    <a href="#learn-more" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Countdown Section -->
+    <section class="countdown-section">
+        <div class="container">
+            <h2 style="font-size: 2rem; margin-bottom: 1rem;">Masterclass Starts In:</h2>
+            <p style="opacity: 0.9; margin-bottom: 2rem;">Don't miss this opportunity to transform your PM career</p>
+            <div class="countdown" id="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">07</span>
+                    <span class="countdown-label">Days</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">12</span>
+                    <span class="countdown-label">Hours</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">45</span>
+                    <span class="countdown-label">Minutes</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">30</span>
+                    <span class="countdown-label">Seconds</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why This Masterclass Section -->
+    <section class="features" id="learn-more">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why This Masterclass?</h2>
+                <p class="section-description">
+                    The product management landscape is evolving rapidly. AI isn't just a tool—it's becoming the foundation of how successful products are built, managed, and scaled.
+                </p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Strategic AI Integration</h3>
+                    <p class="feature-description">
+                        Learn how to strategically integrate AI capabilities into your product roadmap without getting lost in the technical complexity.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Data-Driven Decisions</h3>
+                    <p class="feature-description">
+                        Master AI-powered analytics tools that help you make faster, more accurate product decisions backed by real user insights.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Accelerated Development</h3>
+                    <p class="feature-description">
+                        Discover AI tools and workflows that can reduce your product development cycle by up to 40% while maintaining quality.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3 class="feature-title">AI-Enhanced Research</h3>
+                    <p class="feature-description">
+                        Transform user research with AI tools that analyze feedback at scale and uncover insights traditional methods miss.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3 class="feature-title">Future-Ready Skills</h3>
+                    <p class="feature-description">
+                        Stay ahead of the curve with skills that are becoming essential for senior PM roles at top-tier companies.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <h3 class="feature-title">Practical Implementation</h3>
+                    <p class="feature-description">
+                        Get hands-on experience with real case studies and actionable frameworks you can apply immediately.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who Should Attend Section -->
+    <section class="features" style="background: var(--background-light);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Who Should Attend?</h2>
+                <p class="section-description">
+                    This masterclass is designed for product professionals ready to embrace the future of product management.
+                </p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">👤</div>
+                    <h3 class="feature-title">Senior Product Managers</h3>
+                    <p class="feature-description">
+                        PMs with 3+ years of experience looking to integrate AI capabilities into their product strategy and stay competitive in the market.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3 class="feature-title">Product Leaders</h3>
+                    <p class="feature-description">
+                        VPs of Product, CPOs, and team leads who need to guide their organizations through AI transformation and build AI-first products.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎓</div>
+                    <h3 class="feature-title">Aspiring AI PMs</h3>
+                    <p class="feature-description">
+                        Product professionals transitioning into AI-focused roles or those looking to specialize in AI product management.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏢</div>
+                    <h3 class="feature-title">Startup Founders</h3>
+                    <p class="feature-description">
+                        Entrepreneurs building AI-powered products who need to understand product strategy, user adoption, and market positioning.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">What Our Students Say</h2>
+                <p class="section-description">
+                    Join thousands of product managers who've transformed their careers with our AI PM training.
+                </p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <p class="testimonial-quote">
+                        "This masterclass completely changed how I approach product strategy. The AI frameworks taught here helped me launch 3 successful features that increased user engagement by 150%."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SJ</div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Senior PM at Netflix, USA</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-quote">
+                        "The hands-on approach and real case studies made complex AI concepts easy to understand and apply. I got promoted to Principal PM within 6 months of completing this course."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MK</div>
+                        <div class="author-info">
+                            <h4>Michael Kim</h4>
+                            <p>Principal PM at Google, Canada</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-quote">
+                        "As a startup founder, this masterclass gave me the strategic insights I needed to position our AI product in the market. We raised our Series A shortly after implementing these strategies."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">PR</div>
+                        <div class="author-info">
+                            <h4>Priya Raj</h4>
+                            <p>Founder & CEO, Mumbai, India</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-quote">
+                        "The AI tools and techniques I learned here reduced our product development time by 40%. This masterclass is worth every penny for any PM serious about staying relevant."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JW</div>
+                        <div class="author-info">
+                            <h4>James Wilson</h4>
+                            <p>VP Product at Microsoft, UK</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bonus Section -->
+    <section class="features" style="background: var(--gradient-primary); color: white;">
+        <div class="container">
+            <div class="section-header" style="color: white;">
+                <h2 class="section-title">Exclusive Bonuses</h2>
+                <p class="section-description" style="color: rgba(255, 255, 255, 0.9);">
+                    Get these valuable resources worth $500+ when you register today.
+                </p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);">
+                    <div class="feature-icon" style="background: rgba(255, 255, 255, 0.2); color: white;">📚</div>
+                    <h3 class="feature-title" style="color: white;">AI PM Toolkit</h3>
+                    <p class="feature-description" style="color: rgba(255, 255, 255, 0.9);">
+                        50+ curated AI tools, templates, and frameworks used by top product teams. Ready-to-use resources for immediate implementation.
+                    </p>
+                </div>
+                <div class="feature-card" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);">
+                    <div class="feature-icon" style="background: rgba(255, 255, 255, 0.2); color: white;">🎥</div>
+                    <h3 class="feature-title" style="color: white;">Exclusive Recordings</h3>
+                    <p class="feature-description" style="color: rgba(255, 255, 255, 0.9);">
+                        Lifetime access to all masterclass recordings plus bonus deep-dive sessions with industry experts from top AI companies.
+                    </p>
+                </div>
+                <div class="feature-card" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);">
+                    <div class="feature-icon" style="background: rgba(255, 255, 255, 0.2); color: white;">👥</div>
+                    <h3 class="feature-title" style="color: white;">Private Community</h3>
+                    <p class="feature-description" style="color: rgba(255, 255, 255, 0.9);">
+                        Join an exclusive Slack community of 5,000+ AI PMs. Network, share insights, and get career guidance from peers and mentors.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-description">
+                    Everything you need to know about the AI PM Masterclass.
+                </p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        What if I'm new to AI? Will I be able to follow along?
+                        <span>+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Absolutely! This masterclass is designed for product managers of all AI experience levels. We start with fundamentals and gradually build up to advanced concepts. You don't need a technical background—just curiosity and willingness to learn.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        How long is the masterclass?
+                        <span>+</span>
+                    </button>
+                    <div class="faq-answer">
+                        The live masterclass is 3 hours long with interactive sessions and Q&A. You'll also get lifetime access to recordings and bonus content that adds up to 8+ hours of training materials.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        What if I can't attend the live session?
+                        <span>+</span>
+                    </button>
+                    <div class="faq-answer">
+                        No problem! All registered participants get lifetime access to the full recording within 24 hours. The recording includes all slides, resources, and Q&A sections.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        Is there a money-back guarantee?
+                        <span>+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Yes! We offer a 30-day money-back guarantee. If you're not completely satisfied with the content and value provided, we'll refund your full payment, no questions asked.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        Will I get a certificate?
+                        <span>+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Yes! All participants who attend the live session or complete the recording will receive a certificate of completion that you can add to your LinkedIn profile.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="countdown-section" id="register">
+        <div class="container" style="text-align: center;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Transform Your PM Career Today</h2>
+            <p style="font-size: 1.25rem; opacity: 0.9; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Join 5,000+ product managers who've already mastered AI-driven product strategies. 
+                Limited seats available for this exclusive masterclass.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                <div style="background: rgba(255, 255, 255, 0.1); padding: 1rem 2rem; border-radius: 12px; backdrop-filter: blur(10px);">
+                    <div style="font-size: 1.5rem; font-weight: 800;">$197</div>
+                    <div style="opacity: 0.8; text-decoration: line-through;">Regular Price</div>
+                </div>
+                <div style="background: var(--accent-color); padding: 1rem 2rem; border-radius: 12px; color: white;">
+                    <div style="font-size: 1.5rem; font-weight: 800;">$97</div>
+                    <div>Early Bird Special</div>
+                </div>
+            </div>
+            <a href="#" class="btn" style="background: white; color: var(--primary-color); font-size: 1.25rem; padding: 1.25rem 3rem; font-weight: 700;">
+                🚀 Secure Your Spot Now - Only $97
+            </a>
+            <p style="font-size: 0.875rem; opacity: 0.8; margin-top: 1rem;">
+                ✅ 30-day money-back guarantee  •  ✅ Lifetime access to recordings  •  ✅ Exclusive bonus materials
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">TechAdemy</div>
+                <p class="footer-text">
+                    Empowering product managers with cutting-edge AI skills and strategies 
+                    to build the future of digital products.
+                </p>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TechAdemy. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const now = new Date();
+            const targetDate = new Date(now.getTime() + (7 * 24 * 60 * 60 * 1000) + (12 * 60 * 60 * 1000) + (45 * 60 * 1000) + (30 * 1000));
+            const timeDiff = targetDate - now;
+            
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // FAQ Toggle
+        function toggleFAQ(button) {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('span');
+            
+            if (answer.classList.contains('active')) {
+                answer.classList.remove('active');
+                icon.textContent = '+';
+            } else {
+                // Close all other FAQs
+                document.querySelectorAll('.faq-answer.active').forEach(item => {
+                    item.classList.remove('active');
+                    item.previousElementSibling.querySelector('span').textContent = '+';
+                });
+                
+                answer.classList.add('active');
+                icon.textContent = '-';
+            }
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-up');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.feature-card, .testimonial').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
